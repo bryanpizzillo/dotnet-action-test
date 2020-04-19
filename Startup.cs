@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +40,7 @@ namespace dotnet_action_test
             {
                 app.UseHsts();
             }
-
+            Thread.Sleep(300000);
             //app.UseHttpsRedirection();
             app.UseMvc();
         }

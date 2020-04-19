@@ -55,7 +55,6 @@ jobs:
               time_waited=1
               echo "Checking status of ${API_URL}."
               until $(curl --output /dev/null --silent --fail ${API_URL}); do
-                echo $?
 
                 if [ $time_waited -ge $WAIT_DURATION ]; then
                     echo "Waited past duration. Exiting"
