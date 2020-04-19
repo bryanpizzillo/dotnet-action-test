@@ -34,7 +34,7 @@ jobs:
       - name: Download Published Artifact
         uses: actions/download-artifact@v1
         with:
-          name: glossary-api-ubuntu-latest
+          name: the-app-ubuntu-latest
           path: built-api
         ## using latest LTS releases - also it MUST be the SDK version,
         ## which have stupidly high numbers for the patch version.
