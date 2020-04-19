@@ -1,0 +1,54 @@
+name: Main workflow
+on:
+  ## This tries to avoid unessesary pushes to forked repo
+  ## development branches. No sense in a dev building every
+  ## time they push for a PR and no one should be working on
+  ## common branches in their fork.
+  push:
+jobs:
+  test_build_release:
+    runs-on: ubuntu-latest
+    name: Build and Release
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '2.1.607'
+      - name: Build with dotnet
+        run: dotnet build --configuration Release /WarnAsError
+      - name: Publish
+        run: dotnet publish -c Release -o $GITHUB_WORKSPACE/out
+        shell: bash
+      - name: Upload Published Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: the-app-${{ matrix.operating-system }}
+          path: out
+  integration_tests:
+    name: integration
+    runs-on: ubuntu-latest
+    needs: test_build_release
+    steps:
+      - uses: actions/checkout@master
+      - name: Download Published Artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: glossary-api-ubuntu-latest
+          path: built-api
+        ## using latest LTS releases - also it MUST be the SDK version,
+        ## which have stupidly high numbers for the patch version.
+        ## '3.1.100' breaks our app, so let's just use 2.x
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '2.1.607'
+      - name: Start up api
+        run: |
+              set -x
+              ## Start the app
+              which dotnet
+              dotnet ./built-api/dotnet-action-test.dll 2>&1
+              echo $?
+              ls -l
+# dotnet-action-test.dll
