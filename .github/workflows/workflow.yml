@@ -58,7 +58,7 @@ jobs:
 
                 if [ $time_waited -ge $WAIT_DURATION ]; then
                     echo "Waited past duration. Exiting"
-                    exit 0
+                    exit 1
                 fi
 
                 sleep $SLEEP_TIMEOUT
