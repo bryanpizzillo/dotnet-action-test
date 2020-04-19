@@ -48,9 +48,10 @@ jobs:
           API_URL: http://localhost:5000/api/values
           SLEEP_TIMEOUT: 5
           WAIT_DURATION: 120
+          APP_LOCATION: ./built-api/dotnet-action-test.dll 
         run: |
               ## Start the app
-              dotnet ./built-api/dotnet-action-test.dll 2>&1 &
+              dotnet $APP_LOCATION 2>&1 &
 
               time_waited=1
               echo "Checking status of ${API_URL}."

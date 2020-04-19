@@ -40,7 +40,7 @@ namespace dotnet_action_test
             {
                 app.UseHsts();
             }
-            Thread.Sleep(300000);
+            
             //app.UseHttpsRedirection();
             app.UseMvc();
         }
