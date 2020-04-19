@@ -44,6 +44,7 @@ jobs:
         with:
           dotnet-version: '2.1.607'
       - name: Start up api
+        env:
           API_URL: http://localhost:5000/api/values
           SLEEP_TIMEOUT: 5
           WAIT_DURATION: 120
