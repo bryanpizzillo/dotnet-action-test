@@ -44,16 +44,26 @@ jobs:
         with:
           dotnet-version: '2.1.607'
       - name: Start up api
+          API_URL: http://localhost:5000/api/values
+          SLEEP_TIMEOUT: 5
+          WAIT_DURATION: 120
         run: |
-              set -x
               ## Start the app
-              which dotnet
               dotnet ./built-api/dotnet-action-test.dll 2>&1 &
-              echo "Starting API"
-              until $(curl --output /dev/null --silent --fail http://localhost:5000/api/values); do
+
+              time_waited=1
+              echo "Checking status of ${API_URL}."
+              until $(curl --output /dev/null --silent --fail ${API_URL}); do
                 echo $?
-                ps
-                sleep 5
+
+                if [ $time_waited -ge $WAIT_DURATION ]; then
+                    echo "Waited past duration. Exiting"
+                    exit 0
+                fi
+
+                sleep $SLEEP_TIMEOUT
+                time_waited=$((time_waited + SLEEP_TIMEOUT))
               done
-              echo "Its up"
+
+              echo "API is up"
 # dotnet-action-test.dll
