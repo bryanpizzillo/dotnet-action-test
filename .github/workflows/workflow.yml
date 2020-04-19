@@ -49,7 +49,10 @@ jobs:
               ## Start the app
               which dotnet
               dotnet ./built-api/dotnet-action-test.dll 2>&1 &
-              echo $?
-              ls -l
-              curl http://localhost:5000/api/values
+              echo "Starting API"
+              until $(curl --output /dev/null --silent --head --fail http://localhost:5000); do
+                printf '.'
+                sleep 5
+              done
+              echo "Its up"
 # dotnet-action-test.dll
