@@ -48,7 +48,8 @@ jobs:
               set -x
               ## Start the app
               which dotnet
-              dotnet ./built-api/dotnet-action-test.dll 2>&1
+              dotnet ./built-api/dotnet-action-test.dll 2>&1 &
               echo $?
               ls -l
+              curl http://localhost:5000/api/values
 # dotnet-action-test.dll
