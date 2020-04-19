@@ -23,7 +23,7 @@ jobs:
       - name: Upload Published Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: the-app-${{ matrix.operating-system }}
+          name: the-app-ubuntu-latest
           path: out
   integration_tests:
     name: integration
