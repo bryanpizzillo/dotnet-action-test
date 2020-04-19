@@ -50,7 +50,7 @@ jobs:
               which dotnet
               dotnet ./built-api/dotnet-action-test.dll 2>&1 &
               echo "Starting API"
-              until $(curl --output /dev/null --silent --head --fail http://localhost:5000/api/values); do
+              until $(curl --output /dev/null --silent --head --fail http://127.0.0.1:5000/api/values); do
                 printf '.'
                 sleep 5
               done
